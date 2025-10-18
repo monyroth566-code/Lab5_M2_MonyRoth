@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Expense Tracker</string>
+
+    <!-- MainActivity Strings -->
+    <string name="title_manage_expenses">Track Your Expenses</string>
+    <string name="subtitle_welcome">Hello, [Moniroth Rin ]</string>
+    <string name="last_expense_label">💰 Latest Expense</string>
+    <string name="last_expense_initial">No expenses recorded yet</string>
+    <string name="last_expense_format">Last expense: %1$s %2$s</string>
+    <string name="btn_add_new_expense">➕ Add Expense</string>
+    <string name="btn_view_expense_details">📊 View Details</string>
+    <string name="money_icon_desc">Money Icon</string>
+
+    <!-- AddExpenseActivity Strings -->
+    <string name="title_new_expense">💵 New Expense</string>
+    <string name="label_amount">Amount Spent</string>
+    <string name="hint_amount">Enter the amount</string>
+    <string name="label_currency">Currency</string>
+    <string name="label_category">Expense Category</string>
+    <string name="label_notes">Notes</string>
+    <string name="hint_notes">Add notes (optional)</string>
+    <string name="label_date">Date</string>
+    <string name="hint_date">DD/MM/YYYY</string>
+    <string name="btn_save_expense">Save Expense 💾</string>
+
+    <!-- ExpenseDetailActivity Strings -->
+    <string name="title_expense_details">💰 Expense Summary</string>
+    <string name="label_amount_detail">Amount Spent:</string>
+    <string name="label_currency_detail">Currency:</string>
+    <string name="label_category_detail">Category:</string>
+    <string name="label_notes_detail">Notes:</string>
+    <string name="label_date_detail">Date:</string>
+    <string name="btn_back_home">🏠 Home</string>
+    <string name="default_value">-</string>
+    <string name="default_amount">0</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_enter_amount">Please enter the amount</string>
+    <string name="toast_enter_notes">Please add some notes</string>
+    <string name="toast_enter_date">Please select a date</string>
+    <string name="toast_expense_saved">Expense saved successfully! ✓</string>
+
+    <!-- Currency Options -->
+    <string-array name="currency_options">
+        <item>USD</item>
+        <item>KHR</item>
+        <item>EUR</item>
+        <item>GBP</item>
+        <item>JPY</item>
+    </string-array>
+
+    <!-- Category Options -->
+    <string-array name="category_options">
+        <item>Food</item>
+        <item>Transport</item>
+        <item>Shopping</item>
+        <item>Entertainment</item>
+        <item>Bills</item>
+        <item>Healthcare</item>
+        <item>Education</item>
+        <item>Other</item>
+    </string-array>
+</resources>

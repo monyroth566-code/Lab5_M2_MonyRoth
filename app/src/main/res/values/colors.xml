@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Green Colors - Fresh & Professional -->
+    <color name="expense_primary">#4CAF50</color>        <!-- Material Green (Primary buttons) -->
+    <color name="expense_dark">#1B5E20</color>           <!-- Dark Green (Text, Headers) -->
+    <color name="expense_light">#81C784</color>          <!-- Light Green (Subtle accents) -->
+    <color name="mint_white">#F1F8F4</color>             <!-- Mint Background (Soft, fresh) -->
+    <color name="expense_green">#388E3C</color>          <!-- Medium Green (Secondary text) -->
+
+    <!-- Accent Colors -->
+    <color name="green_accent">#2E7D32</color>           <!-- Deep green accent -->
+    <color name="lime_accent">#9CCC65</color>            <!-- Lime for highlights -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_light">#E0E0E0</color>
+    <color name="gray_medium">#9E9E9E</color>
+    <color name="gray_dark">#424242</color>
+
+    <!-- Button States -->
+    <color name="button_primary">#4CAF50</color>         <!-- Primary button background -->
+    <color name="button_primary_pressed">#388E3C</color> <!-- When pressed -->
+    <color name="button_disabled">#C8E6C9</color>        <!-- Disabled state -->
+
+    <!-- Material Design defaults (keep these) -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+</resources>

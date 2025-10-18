@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Expense Tracker"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ExpenseTracker">
+
+        <!-- Main Activity (Home Screen) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Add Expense Activity (Form Screen) -->
+        <activity
+            android:name=".AddExpenseActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+        <!-- Expense Detail Activity (Detail Screen) -->
+        <activity
+            android:name=".ExpenseDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+    </application>
+
+</manifest>
