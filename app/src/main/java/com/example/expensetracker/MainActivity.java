@@ -1,95 +1,94 @@
 package com.example.expensetracker;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
 
-    private static final int ADD_EXPENSE_REQUEST = 1;
 
-    // UI Components
-    private TextView tvLastExpense;
-    private Button btnAddExpense;
-    private Button btnViewDetail;
 
-    // Data Storage
-    private String amount = "";
-    private String currency = "";
-    private String category = "";
-    private String remark = "";
-    private String createdDate = "";
-    private boolean hasExpense = false;
+import android.content.Intent;
+
+import android.view.Menu;
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+public class MainActivity extends AppCompatActivity { 
+
+    private FragmentManager fragmentManager;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
 
-        // Initialize Views
-        tvLastExpense = findViewById(R.id.tvLastExpense);
-        btnAddExpense = findViewById(R.id.btnAddExpense);
-        btnViewDetail = findViewById(R.id.btnViewDetail);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        fragmentManager = getSupportFragmentManager();
 
-        // Set Initial State
-        updateUI();
+        if (savedInstanceState == null) {
+            loadFragment(new HomeFragment());
+        }
 
-        // Add New Expense Button Click
-        btnAddExpense.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AddExpenseActivity.class);
-            startActivityForResult(intent, ADD_EXPENSE_REQUEST);
-        });
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+            int itemId = item.getItemId();
 
-        // View Detail Button Click
-        btnViewDetail.setOnClickListener(v -> {
-            if (hasExpense) {
-                Intent intent = new Intent(MainActivity.this, ExpenseDetailActivity.class);
-
-                // Pass all data to detail activity
-                intent.putExtra("amount", amount);
-                intent.putExtra("currency", currency);
-                intent.putExtra("category", category);
-                intent.putExtra("remark", remark);
-                intent.putExtra("createdDate", createdDate);
-
-                startActivity(intent);
+            if (itemId == R.id.nav_home) {
+                selectedFragment = new HomeFragment();
+            } else if (itemId == R.id.nav_add_expense) {
+                selectedFragment = new AddExpenseFragment();
+            } else if (itemId == R.id.nav_expense_list) {
+                selectedFragment = new ExpenseListFragment();
             }
+
+            if (selectedFragment != null) {
+                loadFragment(selectedFragment);
+                return true;
+            }
+            return false;
         });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.commit();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == ADD_EXPENSE_REQUEST && resultCode == RESULT_OK && data != null) {
-            // Retrieve data from AddExpenseActivity
-            amount = data.getStringExtra("amount");
-            currency = data.getStringExtra("currency");
-            category = data.getStringExtra("category");
-            remark = data.getStringExtra("remark");
-            createdDate = data.getStringExtra("createdDate");
-
-            hasExpense = true;
-            updateUI();
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
-    private void updateUI() {
-        if (hasExpense) {
-            // Update TextView with last expense
-            String lastExpenseText = getString(R.string.last_expense_format, amount, currency);
-            tvLastExpense.setText(lastExpenseText);
-
-            // Enable View Detail button
-            btnViewDetail.setEnabled(true);
-            btnViewDetail.setBackgroundResource(R.drawable.btn_secondary_bg);
-        } else {
-            // Initial state
-            tvLastExpense.setText(R.string.last_expense_initial);
-            btnViewDetail.setEnabled(false);
-            btnViewDetail.setBackgroundResource(R.drawable.btn_disabled_bg);
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_sign_out) {
+            mAuth.signOut();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

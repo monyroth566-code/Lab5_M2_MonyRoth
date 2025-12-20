@@ -24,6 +24,22 @@
     <string name="label_date">Date</string>
     <string name="hint_date">DD/MM/YYYY</string>
     <string name="btn_save_expense">Save Expense 💾</string>
+    <!-- Add to strings.xml if you want -->
+
+    <!-- Login/Signup Strings -->
+    <string name="title_login">Expense Tracker</string>
+    <string name="subtitle_login">Welcome Back!</string>
+    <string name="title_signup">Create Account</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_confirm_password">Confirm Password</string>
+    <string name="btn_login_text">Login</string>
+    <string name="btn_signup_text">Sign Up</string>
+    <string name="text_no_account">Don\'t have an account?</string>
+    <string name="text_signup_link">Sign Up</string>
+    <string name="text_have_account">Already have an account?</string>
+    <string name="text_login_link">Login</string>
+    <string name="menu_sign_out">Sign Out</string>
 
     <!-- ExpenseDetailActivity Strings -->
     <string name="title_expense_details">💰 Expense Summary</string>

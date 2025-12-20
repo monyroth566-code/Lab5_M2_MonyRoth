@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="etEmail" type="id" />
+    <item name="etPassword" type="id" />
+    <item name="btnLogin" type="id" />
+    <item name="tvSignup" type="id" />
+    <item name="action_sign_out" type="id" />
+    <item name="etConfirmPassword" type="id" />
+    <item name="btnSignup" type="id" />
+    <item name="tvLogin" type="id" />
+    <item name="emptyView" type="id" />
+    <item name="swipeRefreshLayout" type="id" />
+</resources>

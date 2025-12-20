@@ -3,33 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mint_white"
+    android:background="@color/background_light"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:gravity="center_horizontal">
 
+        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_expense_details"
-            android:textSize="30sp"
+            android:text="Expense Details"
+            android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="@color/expense_dark"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:textColor="@color/primary_dark"
             android:layout_marginBottom="30dp" />
 
+        <!-- Detail Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="6dp"
-            android:layout_marginBottom="20dp"
-            app:cardBackgroundColor="@color/white">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,176 +37,118 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Amount Section -->
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="14dp">
+                    android:text="Amount"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="5dp" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/label_amount_detail"
-                        android:textSize="15sp"
-                        android:textColor="@color/gray_dark"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvAmount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/default_amount"
-                        android:textSize="22sp"
-                        android:textColor="@color/expense_primary"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_light"
-                    android:layout_marginBottom="14dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tvDetailAmount"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="14dp">
+                    android:text="50.00"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:layout_marginBottom="20dp" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/label_currency_detail"
-                        android:textSize="15sp"
-                        android:textColor="@color/gray_dark"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvCurrency"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/default_value"
-                        android:textSize="17sp"
-                        android:textColor="@color/expense_dark" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_light"
-                    android:layout_marginBottom="14dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Currency Section -->
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="14dp">
+                    android:text="Currency"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="5dp" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/label_category_detail"
-                        android:textSize="15sp"
-                        android:textColor="@color/gray_dark"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/default_value"
-                        android:textSize="17sp"
-                        android:textColor="@color/expense_dark" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_light"
-                    android:layout_marginBottom="14dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tvDetailCurrency"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="14dp">
+                    android:text="USD"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="20dp" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/label_notes_detail"
-                        android:textSize="15sp"
-                        android:textColor="@color/gray_dark"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvRemark"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/default_value"
-                        android:textSize="15sp"
-                        android:textColor="@color/expense_dark"
-                        android:gravity="end" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_light"
-                    android:layout_marginBottom="14dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Category Section -->
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="Category"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="5dp" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/label_date_detail"
-                        android:textSize="15sp"
-                        android:textColor="@color/gray_dark"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvDetailCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Food"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="20dp" />
 
-                    <TextView
-                        android:id="@+id/tvCreatedDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/default_value"
-                        android:textSize="15sp"
-                        android:textColor="@color/expense_dark" />
-                </LinearLayout>
+                <!-- Date Section -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="5dp" />
+
+                <TextView
+                    android:id="@+id/tvDetailCreatedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2024-11-15"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="20dp" />
+
+                <!-- Remark Section -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notes/Remark"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="5dp" />
+
+                <TextView
+                    android:id="@+id/tvDetailRemark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lunch at restaurant"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_primary" />
 
             </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
+        <!-- Back Button -->
         <Button
-            android:id="@+id/btnAddNewExpense"
+            android:id="@+id/btnBackToList"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:text="@string/btn_add_new_expense"
-            android:textSize="17sp"
-            android:textStyle="bold"
+            android:layout_height="55dp"
+            android:text="Back to List"
             android:textColor="@color/white"
-            android:background="@drawable/btn_primary_bg"
-            android:elevation="4dp"
-            android:layout_marginBottom="12dp" />
-
-        <Button
-            android:id="@+id/btnBackToHome"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:text="@string/btn_back_home"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/expense_primary"
-            android:background="@drawable/btn_secondary_bg"
-            android:elevation="2dp" />
+            android:background="@drawable/btn_primary_bg"
+            android:layout_marginTop="30dp" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
     </LinearLayout>
+
 </ScrollView>

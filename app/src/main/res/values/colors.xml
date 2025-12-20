@@ -21,6 +21,22 @@
     <color name="button_primary_pressed">#388E3C</color> <!-- When pressed -->
     <color name="button_disabled">#C8E6C9</color>        <!-- Disabled state -->
 
+    <!-- Additional Colors for Lab 4 (matching green theme) -->
+    <color name="primary">#4CAF50</color>                <!-- Same as expense_primary -->
+    <color name="primary_dark">#1B5E20</color>           <!-- Same as expense_dark -->
+    <color name="primary_light">#81C784</color>          <!-- Same as expense_light -->
+    <color name="accent">#9CCC65</color>                 <!-- Lime accent -->
+
+    <!-- Text Colors -->
+    <color name="text_primary">#1B5E20</color>           <!-- Dark green for text -->
+    <color name="text_secondary">#388E3C</color>         <!-- Medium green for secondary text -->
+
+    <!-- Background Colors -->
+    <color name="background_light">#F1F8F4</color>       <!-- Mint white background -->
+
+    <!-- Button Colors for Lab 4 -->
+    <color name="button_secondary">#81C784</color>       <!-- Light green for secondary buttons -->
+
     <!-- Material Design defaults (keep these) -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
