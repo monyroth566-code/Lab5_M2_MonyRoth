@@ -10,4 +10,12 @@
     <item name="tvLogin" type="id" />
     <item name="emptyView" type="id" />
     <item name="swipeRefreshLayout" type="id" />
+
+    <!-- HomeFragment IDs -->
+    <item name="tvHomeAmount" type="id" />
+    <item name="tvHomeCategory" type="id" />
+    <item name="tvHomeDate" type="id" />
+    <item name="summaryCard" type="id" />
+    <item name="tvNoData" type="id" />
+    <item name="progressBar" type="id" />
 </resources>

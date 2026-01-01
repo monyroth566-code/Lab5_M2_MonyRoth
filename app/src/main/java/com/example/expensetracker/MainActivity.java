@@ -6,22 +6,22 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-
-
-
 import android.content.Intent;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity { 
+public class MainActivity extends AppCompatActivity implements AddExpenseFragment.OnExpenseAddedListener {
 
     private FragmentManager fragmentManager;
     private FirebaseAuth mAuth;
+
+    // Keep references to fragments
+    private HomeFragment homeFragment;
+    private AddExpenseFragment addExpenseFragment;
+    private ExpenseListFragment expenseListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,13 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fragmentManager = getSupportFragmentManager();
 
+        // Initialize fragments
+        homeFragment = new HomeFragment();
+        addExpenseFragment = new AddExpenseFragment();
+        expenseListFragment = new ExpenseListFragment();
+
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
+            loadFragment(homeFragment);
         }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -52,11 +57,19 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home) {
-                selectedFragment = new HomeFragment();
+                selectedFragment = homeFragment;
+                // Refresh home when navigating to it
+                if (homeFragment.isAdded()) {
+                    homeFragment.refreshData();
+                }
             } else if (itemId == R.id.nav_add_expense) {
-                selectedFragment = new AddExpenseFragment();
+                selectedFragment = addExpenseFragment;
             } else if (itemId == R.id.nav_expense_list) {
-                selectedFragment = new ExpenseListFragment();
+                selectedFragment = expenseListFragment;
+                // Refresh list when navigating to it
+                if (expenseListFragment.isAdded()) {
+                    expenseListFragment.refreshData();
+                }
             }
 
             if (selectedFragment != null) {
@@ -90,5 +103,17 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Callback method when expense is added
+    @Override
+    public void onExpenseAdded() {
+        // Refresh both home and list fragments
+        if (homeFragment.isAdded()) {
+            homeFragment.refreshData();
+        }
+        if (expenseListFragment.isAdded()) {
+            expenseListFragment.refreshData();
+        }
     }
 }

@@ -74,7 +74,8 @@ public class ExpenseListFragment extends Fragment {
         }
 
         ExpenseApiService apiService = RetrofitClient.getApiService();
-        Call<List<Expense>> call = apiService.getExpenses(page, pageSize);
+        // Sort by createdDate descending (newest first)
+        Call<List<Expense>> call = apiService.getExpenses(page, pageSize, "-createdDate");
 
         call.enqueue(new Callback<List<Expense>>() {
             @Override
@@ -199,7 +200,8 @@ public class ExpenseListFragment extends Fragment {
         refreshData();
     }
 
-    private void refreshData() {
+    // Make this public so it can be called from MainActivity
+    public void refreshData() {
         currentPage = 1;
         hasMoreData = true;
         expenseList.clear();

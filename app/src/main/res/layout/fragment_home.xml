@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -17,14 +18,23 @@
         android:textColor="@color/primary_dark"
         android:layout_marginBottom="30dp" />
 
+    <!-- Loading Indicator -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone" />
+
     <!-- Summary Card -->
     <androidx.cardview.widget.CardView
+        android:id="@+id/summaryCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,31 +52,46 @@
                 android:layout_marginBottom="15dp" />
 
             <TextView
+                android:id="@+id/tvHomeAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Amount: $50.00"
+                android:text="Amount: $0.00 USD"
                 android:textSize="16sp"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvHomeCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category: Food"
+                android:text="Category: N/A"
                 android:textSize="16sp"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvHomeDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date: 2024-11-15"
+                android:text="Date: N/A"
                 android:textSize="16sp"
                 android:textColor="@color/text_primary" />
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <!-- No Data Message -->
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No expenses recorded yet.\nAdd your first expense!"
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:visibility="gone" />
 
     <!-- Info Text -->
     <TextView

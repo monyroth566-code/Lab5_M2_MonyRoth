@@ -29,6 +29,11 @@ public class AddExpenseFragment extends Fragment {
     private Button btnAddExpense;
     private ProgressBar progressBar;
 
+    // Interface for notifying when expense is added
+    public interface OnExpenseAddedListener {
+        void onExpenseAdded();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -115,7 +120,7 @@ public class AddExpenseFragment extends Fragment {
         expense.setCurrency(currency);
         expense.setCategory(category);
         expense.setRemark(remark);
-        expense.setCreatedDate(new Date()); // ✅ AUTO-GENERATED from computer time
+        expense.setCreatedDate(new Date());
         expense.setCreatedBy(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         btnAddExpense.setEnabled(false);
@@ -123,7 +128,7 @@ public class AddExpenseFragment extends Fragment {
 
         // POST to API
         ExpenseApiService apiService = RetrofitClient.getApiService();
-        Call<Expense> call = apiService.addExpense(expense);  // ✅ FIXED LINE 126
+        Call<Expense> call = apiService.addExpense(expense);
 
         call.enqueue(new Callback<Expense>() {
             @Override
@@ -136,6 +141,11 @@ public class AddExpenseFragment extends Fragment {
                             "Expense added successfully!",
                             Toast.LENGTH_SHORT).show();
                     clearForm();
+
+                    // Notify MainActivity that expense was added
+                    if (getActivity() instanceof OnExpenseAddedListener) {
+                        ((OnExpenseAddedListener) getActivity()).onExpenseAdded();
+                    }
                 } else {
                     Toast.makeText(requireContext(),
                             "Failed to add expense: " + response.code(),

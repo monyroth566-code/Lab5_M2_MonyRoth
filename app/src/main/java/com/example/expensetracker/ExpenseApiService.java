@@ -14,7 +14,8 @@ public interface ExpenseApiService {
     @GET("expenses")
     Call<List<Expense>> getExpenses(
             @Query("page") int page,
-            @Query("limit") int limit
+            @Query("limit") int limit,
+            @Query("sort") String sort  // Add sort parameter
     );
 
     @POST("expenses")
