@@ -1,6 +1,7 @@
 package com.example.expensetracker;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import java.util.Date;
 import java.util.UUID;
 import retrofit2.Call;
@@ -22,6 +24,7 @@ import retrofit2.Response;
 
 public class AddExpenseFragment extends Fragment {
 
+    private static final String TAG = "AddExpenseFragment";
     private EditText etAmount;
     private Spinner spinnerCurrency;
     private Spinner spinnerCategory;
@@ -36,7 +39,8 @@ public class AddExpenseFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_add_expense, container, false);
     }
 
@@ -51,6 +55,7 @@ public class AddExpenseFragment extends Fragment {
         btnAddExpense = view.findViewById(R.id.btnAddExpense);
         progressBar = view.findViewById(R.id.progressBar);
 
+        // Setup currency spinner
         ArrayAdapter<CharSequence> currencyAdapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.currency_options,
@@ -59,6 +64,7 @@ public class AddExpenseFragment extends Fragment {
         currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCurrency.setAdapter(currencyAdapter);
 
+        // Setup category spinner
         ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.category_options,
@@ -113,6 +119,13 @@ public class AddExpenseFragment extends Fragment {
         String category = spinnerCategory.getSelectedItem().toString();
         String remark = etRemark.getText().toString().trim();
 
+        // Get current user
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(requireContext(), "User not authenticated", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // Create expense with auto-generated fields
         Expense expense = new Expense();
         expense.setId(UUID.randomUUID().toString());
@@ -121,7 +134,9 @@ public class AddExpenseFragment extends Fragment {
         expense.setCategory(category);
         expense.setRemark(remark);
         expense.setCreatedDate(new Date());
-        expense.setCreatedBy(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        expense.setCreatedBy(currentUser.getUid());
+
+        Log.d(TAG, "Adding expense: " + expense.getId());
 
         btnAddExpense.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
@@ -137,6 +152,11 @@ public class AddExpenseFragment extends Fragment {
                 progressBar.setVisibility(View.GONE);
 
                 if (response.isSuccessful() && response.body() != null) {
+                    Expense addedExpense = response.body();
+                    Log.d(TAG, "Expense added successfully: " + addedExpense.getId());
+                    Log.d(TAG, "Amount: " + addedExpense.getAmount() + " " + addedExpense.getCurrency());
+                    Log.d(TAG, "Category: " + addedExpense.getCategory());
+
                     Toast.makeText(requireContext(),
                             "Expense added successfully!",
                             Toast.LENGTH_SHORT).show();
@@ -144,9 +164,11 @@ public class AddExpenseFragment extends Fragment {
 
                     // Notify MainActivity that expense was added
                     if (getActivity() instanceof OnExpenseAddedListener) {
+                        Log.d(TAG, "Triggering onExpenseAdded callback");
                         ((OnExpenseAddedListener) getActivity()).onExpenseAdded();
                     }
                 } else {
+                    Log.e(TAG, "Failed to add expense: " + response.code());
                     Toast.makeText(requireContext(),
                             "Failed to add expense: " + response.code(),
                             Toast.LENGTH_SHORT).show();
@@ -155,6 +177,7 @@ public class AddExpenseFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Expense> call, Throwable t) {
+                Log.e(TAG, "Error adding expense", t);
                 btnAddExpense.setEnabled(true);
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(requireContext(),
@@ -169,5 +192,6 @@ public class AddExpenseFragment extends Fragment {
         etRemark.setText("");
         spinnerCurrency.setSelection(0);
         spinnerCategory.setSelection(0);
+        etAmount.requestFocus();
     }
 }

@@ -2,6 +2,7 @@ package com.example.expensetracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -16,6 +17,7 @@ import retrofit2.Response;
 
 public class ExpenseDetailActivity extends AppCompatActivity {
 
+    private static final String TAG = "ExpenseDetailActivity";
     private TextView tvDetailAmount;
     private TextView tvDetailCurrency;
     private TextView tvDetailCategory;
@@ -28,6 +30,12 @@ public class ExpenseDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense_detail);
+
+        // Enable back button in action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Expense Details");
+        }
 
         // Initialize Views
         tvDetailAmount = findViewById(R.id.tvDetailAmount);
@@ -42,6 +50,8 @@ public class ExpenseDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String expenseId = intent.getStringExtra("expenseId");
 
+        Log.d(TAG, "Received expense ID: " + expenseId);
+
         if (expenseId != null && !expenseId.isEmpty()) {
             loadExpenseDetails(expenseId);
         } else {
@@ -51,6 +61,12 @@ public class ExpenseDetailActivity extends AppCompatActivity {
 
         // Back button
         btnBackToList.setOnClickListener(v -> finish());
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     private void loadExpenseDetails(String expenseId) {
@@ -65,8 +81,10 @@ public class ExpenseDetailActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
 
                 if (response.isSuccessful() && response.body() != null) {
+                    Log.d(TAG, "Loaded expense details successfully");
                     displayExpenseDetails(response.body());
                 } else {
+                    Log.e(TAG, "Failed to load details: " + response.code());
                     Toast.makeText(ExpenseDetailActivity.this,
                             "Failed to load details: " + response.code(),
                             Toast.LENGTH_SHORT).show();
@@ -76,6 +94,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Expense> call, Throwable t) {
+                Log.e(TAG, "Error loading expense details", t);
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(ExpenseDetailActivity.this,
                         "Error: " + t.getMessage(),
@@ -98,5 +117,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
         } else {
             tvDetailCreatedDate.setText("N/A");
         }
+
+        Log.d(TAG, "Displayed expense: " + expense.getId());
     }
 }

@@ -1,6 +1,9 @@
 package com.example.expensetracker;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements AddExpenseFragment.OnExpenseAddedListener {
 
+    private static final String TAG = "MainActivity";
     private FragmentManager fragmentManager;
     private FirebaseAuth mAuth;
 
@@ -108,12 +112,25 @@ public class MainActivity extends AppCompatActivity implements AddExpenseFragmen
     // Callback method when expense is added
     @Override
     public void onExpenseAdded() {
-        // Refresh both home and list fragments
-        if (homeFragment.isAdded()) {
-            homeFragment.refreshData();
-        }
-        if (expenseListFragment.isAdded()) {
-            expenseListFragment.refreshData();
-        }
+        Log.d(TAG, "Expense added callback triggered");
+
+        // Use a longer delay to ensure the API has fully processed the new expense
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            Log.d(TAG, "Executing delayed refresh...");
+
+            // Refresh both home and list fragments
+            if (homeFragment.isAdded()) {
+                Log.d(TAG, "Refreshing home fragment");
+                homeFragment.refreshData();
+            }
+            if (expenseListFragment.isAdded()) {
+                Log.d(TAG, "Refreshing list fragment");
+                expenseListFragment.refreshData();
+            }
+
+            // Switch to expense list to show the newly added expense
+            BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
+            bottomNav.setSelectedItemId(R.id.nav_expense_list);
+        }, 800); // Increased to 800ms delay to ensure API has time to process
     }
 }
